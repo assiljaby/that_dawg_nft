@@ -8,7 +8,8 @@ import {DeployBasicNft} from "script/BasicNft.s.sol";
 contract CounterTest is Test {
     BasicNft private basicNft;
     address private immutable i_user = makeAddr("USER");
-    string private constant TOKEN_URI = "https://bafybeihvrr2zo2stmgtlavkwbsxjoxwrp3w2j54mv4lqxrjncj73rppns4.ipfs.dweb.link?filename=dawg.json";
+    string private constant TOKEN_URI =
+        "https://bafybeihvrr2zo2stmgtlavkwbsxjoxwrp3w2j54mv4lqxrjncj73rppns4.ipfs.dweb.link?filename=dawg.json";
 
     function setUp() public {
         DeployBasicNft deployBasicNft = new DeployBasicNft();
@@ -24,7 +25,7 @@ contract CounterTest is Test {
          * The reason why we encoded then hashed the strings is
          * because strings are arrays. In solidity arrays are not
          * comparable.
-         * 
+         *
          * `abi.encodePacked` returns bytes
          * keccak256 hashes the bytes into a fixed length bytes32
          * which is a comparable type
@@ -50,10 +51,7 @@ contract CounterTest is Test {
 
         string memory currentURI = basicNft.tokenURI(initCounter);
         assertEq(basicNft.getTokenCounter(), initCounter + 1);
-        assertEq(
-            keccak256(abi.encodePacked(currentURI)),
-            keccak256(abi.encodePacked(TOKEN_URI))
-        );
+        assertEq(keccak256(abi.encodePacked(currentURI)), keccak256(abi.encodePacked(TOKEN_URI)));
         assertEq(basicNft.balanceOf(i_user), 1);
     }
 }
